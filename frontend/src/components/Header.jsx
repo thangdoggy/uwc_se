@@ -24,7 +24,7 @@ const Header = () => {
       <Link to="/" className="flex items-center">
         <img src={Logo} alt="" width="60px" />
         <h1 className="font-bold uppercase text-2xl text-green-900 pl-5">
-          HỆ THỐNG THU GOM RÁC THẢI ĐÔ THỊ
+          HỆ THỐNG QUẢN LÝ THU GOM RÁC THẢI ĐÔ THỊ
         </h1>
       </Link>
 
