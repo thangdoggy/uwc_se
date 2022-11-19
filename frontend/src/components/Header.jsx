@@ -12,7 +12,7 @@ const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
   <button
     type="button"
     onClick={customFunc}
-    className="ml-3 p-2 text-2xl rounded-full text-green-900 hover:bg-green-900 hover:text-white"
+    className="p-2 text-2xl rounded-full text-green-900 hover:bg-green-900 hover:text-white"
   >
     {icon}
   </button>

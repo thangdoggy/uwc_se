@@ -10,7 +10,7 @@ const Sidebar = () => {
     "flex items-center gap-2 rounded-lg mt-1 mr-5 mb-1 text-gray-700 pl-4 pt-2.5 pb-2.5 hover:bg-gray-200";
 
   return (
-    <div className="pl-5 w-48 h-screen overflow-auto pb-5 shadow-2xl">
+    <div className="pl-5 w-52 h-screen overflow-auto pb-5 shadow-2xl">
       <div className="mt-5">
         {links.map((item) => {
           return (
