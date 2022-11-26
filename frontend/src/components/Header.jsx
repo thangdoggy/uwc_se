@@ -6,9 +6,9 @@ import { MdNotificationsNone } from "react-icons/md";
 import { MdKeyboardArrowDown } from "react-icons/md";
 
 import Logo from "../img/logo.png";
-import avatar from "../img/avatar.png";
+import Avatar from "../img/avatar.png";
 
-const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
+const NavButton = ({ title, customFunc, icon }) => (
   <button
     type="button"
     onClick={customFunc}
@@ -19,8 +19,10 @@ const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
 );
 
 const Header = () => {
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
   return (
-    <div className="flex justify-between relative drop-shadow-md bg-gray-100 h-20 px-11">
+    <div className="fixed w-full flex justify-between shadow-md bg-gray-100 h-20 px-11 z-1000">
       <Link to="/" className="flex items-center">
         <img src={Logo} alt="" width="60px" />
         <h1 className="font-bold uppercase text-2xl text-green-900 pl-5">
@@ -28,32 +30,34 @@ const Header = () => {
         </h1>
       </Link>
 
-      <div className="flex items-center">
-        <NavButton
-          title="Chat"
-          customFunc={() => {}}
-          color="text-green-900"
-          icon={<BiMessageRounded />}
-        />
-        <NavButton
-          title="Notifications"
-          customFunc={() => {}}
-          color="text-green-900"
-          icon={<MdNotificationsNone />}
-        />
-
-        <div className="flex items-center cursor-pointer" onClick={() => {}}>
-          <span className="text-lg text-gray-600 ml-3">
-            <strong>Im into you, HN</strong>
-          </span>
-          <MdKeyboardArrowDown className="ml-1 text-lg text-gray-600" />
-          <img
-            src={avatar}
-            alt="User Avatar"
-            className="ml-3 mr-3 rounded-full w-10"
+      {userInfo ? (
+        <div className="flex items-center">
+          <NavButton
+            title="Notifications"
+            customFunc={() => {}}
+            icon={<MdNotificationsNone />}
           />
+          <NavButton
+            title="Chat"
+            customFunc={() => {}}
+            icon={<BiMessageRounded />}
+          />
+
+          <div className="flex items-center cursor-pointer" onClick={() => {}}>
+            <img
+              src={Avatar}
+              alt="User Avatar"
+              className="ml-3 mr-3 rounded-full w-10"
+            />
+            <span className="text-lg text-gray-600">
+              <strong>Hi, {userInfo.name}</strong>
+            </span>
+            <MdKeyboardArrowDown className="ml-1 text-lg text-gray-600" />
+          </div>
         </div>
-      </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 };
