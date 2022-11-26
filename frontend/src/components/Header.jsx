@@ -8,21 +8,13 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 import Logo from "../img/logo.png";
 import Avatar from "../img/avatar.png";
 
-import UserProfile from "./UserProfile";
-
-const NavButton = ({ title, customFunc, icon }) => (
-  <button
-    type="button"
-    onClick={customFunc}
-    className="p-2 text-2xl rounded-full text-green-900 hover:bg-green-900 hover:text-white"
-  >
-    {icon}
-  </button>
-);
+import { UserProfile, Notification, Chat } from ".";
 
 const Header = () => {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const [clickedProfile, setClickedProfile] = useState(false);
+  const [clickedChat, setClickedChat] = useState(false);
+  const [clickedNotification, setClickedNotification] = useState(false);
 
   return (
     <div className="fixed w-full flex justify-between shadow-md bg-gray-100 h-20 px-11 z-1000">
@@ -35,21 +27,42 @@ const Header = () => {
 
       {userInfo ? (
         <div className="flex items-center">
-          <NavButton
-            title="Notifications"
-            customFunc={() => {}}
-            icon={<MdNotificationsNone />}
-          />
-          <NavButton
-            title="Chat"
-            customFunc={() => {}}
-            icon={<BiMessageRounded />}
-          />
+          <div
+            className="relative p-2 text-2xl rounded-full text-green-900 hover:bg-green-900 hover:text-white cursor-pointer"
+            onClick={() => {
+              setClickedNotification(!clickedNotification);
+              setClickedProfile(false);
+              setClickedChat(false);
+            }}
+          >
+            <MdNotificationsNone />
+            <span
+              style={{ background: "green" }}
+              className="absolute inline-flex rounded-full h-2 w-2 right-2 top-2"
+            />
+          </div>
+
+          <div
+            className="relative p-2 text-2xl rounded-full text-green-900 hover:bg-green-900 hover:text-white cursor-pointer"
+            onClick={() => {
+              setClickedChat(!clickedChat);
+              setClickedNotification(false);
+              setClickedProfile(false);
+            }}
+          >
+            <BiMessageRounded />
+            <span
+              style={{ background: "green" }}
+              className="absolute inline-flex rounded-full h-2 w-2 right-2 top-2"
+            />
+          </div>
 
           <div
             className="flex items-center cursor-pointer"
             onClick={() => {
               setClickedProfile(!clickedProfile);
+              setClickedChat(false);
+              setClickedNotification(false);
             }}
           >
             <img
@@ -68,6 +81,8 @@ const Header = () => {
       )}
 
       {clickedProfile && <UserProfile />}
+      {clickedNotification && <Notification />}
+      {clickedChat && <Chat />}
     </div>
   );
 };

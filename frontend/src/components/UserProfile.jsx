@@ -1,7 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import { MdOutlineCancel } from "react-icons/md";
 import avatar from "../img/avatar.png";
 
 const UserProfile = () => {
@@ -16,7 +15,7 @@ const UserProfile = () => {
   };
 
   return (
-    <div className="nav-item absolute right-8 top-16 bg-white p-8 rounded-lg w-80 shadow-lg border border-gray-200">
+    <div className="nav-item absolute right-10 top-16 bg-white p-8 rounded-lg w-80 shadow-lg border border-gray-200">
       <p className="font-semibold text-lg">Hồ sơ của bạn</p>
       <Link
         to="#"
