@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 import { BiMessageRounded } from "react-icons/bi";
@@ -7,6 +7,8 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 
 import Logo from "../img/logo.png";
 import Avatar from "../img/avatar.png";
+
+import UserProfile from "./UserProfile";
 
 const NavButton = ({ title, customFunc, icon }) => (
   <button
@@ -20,6 +22,7 @@ const NavButton = ({ title, customFunc, icon }) => (
 
 const Header = () => {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const [clickedProfile, setClickedProfile] = useState(false);
 
   return (
     <div className="fixed w-full flex justify-between shadow-md bg-gray-100 h-20 px-11 z-1000">
@@ -43,7 +46,12 @@ const Header = () => {
             icon={<BiMessageRounded />}
           />
 
-          <div className="flex items-center cursor-pointer" onClick={() => {}}>
+          <div
+            className="flex items-center cursor-pointer"
+            onClick={() => {
+              setClickedProfile(!clickedProfile);
+            }}
+          >
             <img
               src={Avatar}
               alt="User Avatar"
@@ -58,6 +66,8 @@ const Header = () => {
       ) : (
         ""
       )}
+
+      {clickedProfile && <UserProfile />}
     </div>
   );
 };
