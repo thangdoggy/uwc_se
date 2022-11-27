@@ -37,9 +37,11 @@ const Header = () => {
           >
             <MdNotificationsNone />
             <span
-              style={{ background: "green" }}
-              className="absolute inline-flex rounded-full h-2 w-2 right-2 top-2"
-            />
+              style={{ background: "brown" }}
+              className="absolute inline-flex rounded-full h-4 w-2 right-2 top-1 text-xs text-white"
+            >
+              2
+            </span>
           </div>
 
           <div
@@ -52,9 +54,11 @@ const Header = () => {
           >
             <BiMessageRounded />
             <span
-              style={{ background: "green" }}
-              className="absolute inline-flex rounded-full h-2 w-2 right-2 top-2"
-            />
+              style={{ background: "brown" }}
+              className="absolute inline-flex rounded-full h-4 w-2 right-2 top-1  text-xs text-white"
+            >
+              3
+            </span>
           </div>
 
           <div
@@ -70,7 +74,7 @@ const Header = () => {
               alt="User Avatar"
               className="ml-3 mr-3 rounded-full w-10"
             />
-            <span className="text-lg text-gray-600">
+            <span className="text-md text-gray-600">
               <strong>Hi, {userInfo.name}</strong>
             </span>
             <MdKeyboardArrowDown className="ml-1 text-lg text-gray-600" />

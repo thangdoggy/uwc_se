@@ -87,7 +87,7 @@ const Login = () => {
               />
             </div>
 
-            <a href="#" className=" text-green-800 hover:underline float-right">
+            <a href="/" className=" text-green-800 hover:underline float-right">
               Quên mật khẩu?
             </a>
 

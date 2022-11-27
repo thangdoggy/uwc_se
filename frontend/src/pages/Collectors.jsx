@@ -1,12 +1,7 @@
 import React from "react";
-import { Sidebar } from "../components";
 
 const Collectors = () => {
-  return (
-    <div>
-      <Sidebar />
-    </div>
-  );
+  return <div></div>;
 };
 
 export default Collectors;

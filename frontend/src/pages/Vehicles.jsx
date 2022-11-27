@@ -1,12 +1,7 @@
 import React from "react";
-import { Sidebar } from "../components";
 
 const Vehicles = () => {
-  return (
-    <div>
-      <Sidebar />
-    </div>
-  );
+  return <div></div>;
 };
 
 export default Vehicles;

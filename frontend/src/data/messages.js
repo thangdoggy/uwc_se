@@ -6,11 +6,31 @@ export const notifications = [
     image: bin,
     message: "Đã đầy rác",
     desc: "Điểm thu gom tại đường số 23 đã đầy rác",
+    isRead: false,
   },
   {
     image: bin,
     message: "Đã đầy rác",
     desc: "Điểm thu gom tại đường số 23 đã đầy rác",
+    isRead: true,
+  },
+  {
+    image: bin,
+    message: "Đã đầy rác",
+    desc: "Điểm thu gom tại đường số 23 đã đầy rác",
+    isRead: false,
+  },
+  {
+    image: bin,
+    message: "Đã đầy rác",
+    desc: "Điểm thu gom tại đường số 23 đã đầy rác",
+    isRead: true,
+  },
+  {
+    image: bin,
+    message: "Đã đầy rác",
+    desc: "Điểm thu gom tại đường số 23 đã đầy rác",
+    isRead: true,
   },
 ];
 
@@ -20,17 +40,34 @@ export const chats = [
     message: "Thay đổi tuyến đường",
     desc: "Tuyến đường số 8 hôm nay bị huỷ bỏ do có công trường đang thi công",
     time: "8:02 27/11/2022",
+    isRead: false,
   },
   {
     image: user,
     message: "Thay đổi tuyến đường",
     desc: "Tuyến đường số 8 hôm nay bị huỷ bỏ do có công trường đang thi công",
     time: "8:02 27/11/2022",
+    isRead: false,
   },
   {
     image: user,
     message: "Thay đổi tuyến đường",
     desc: "Tuyến đường số 8 hôm nay bị huỷ bỏ do có công trường đang thi công",
     time: "8:02 27/11/2022",
+    isRead: false,
+  },
+  {
+    image: user,
+    message: "Thay đổi tuyến đường",
+    desc: "Tuyến đường số 8 hôm nay bị huỷ bỏ do có công trường đang thi công",
+    time: "8:02 27/11/2022",
+    isRead: true,
+  },
+  {
+    image: user,
+    message: "Thay đổi tuyến đường",
+    desc: "Tuyến đường số 8 hôm nay bị huỷ bỏ do có công trường đang thi công",
+    time: "8:02 27/11/2022",
+    isRead: true,
   },
 ];

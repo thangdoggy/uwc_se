@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
@@ -34,6 +34,7 @@ const App = () => {
     <div>
       <BrowserRouter>
         <Header />
+        <Sidebar />
         <div>
           <Routes>
             {/* Dashboard */}
