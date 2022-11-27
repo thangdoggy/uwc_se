@@ -3,15 +3,15 @@ import React from "react";
 import { chats } from "../data/messages";
 
 const unRead =
-  "flex items-center leading-8 gap-5 p-3 border-b border-gray-300 cursor-pointer hover:bg-green-100 bg-gray-100";
+  "flex items-center gap-5 px-8 py-3 border-b border-gray-300 cursor-pointer hover:bg-green-100 bg-gray-100";
 const read =
-  "flex items-center leading-8 gap-5 p-3 border-b border-gray-300 cursor-pointer hover:bg-green-100";
+  "flex items-center gap-5 px-8 py-3 border-b border-gray-300 cursor-pointer hover:bg-green-100";
 
 const Chat = () => {
   return (
-    <div className="absolute right-10 top-16 bg-white p-8 rounded-lg w-96 h-128 overflow-auto border border-gray-200">
+    <div className="absolute right-10 top-16 bg-white py-8 rounded-lg w-96 h-128 overflow-auto border border-gray-200">
       <div className="flex items-center justify-between">
-        <div className="w-full flex items-end justify-between">
+        <div className="w-full flex items-end justify-between px-8">
           <p className="font-bold text-lg">Tin nhắn</p>
           <p className="hover:underline hover:text-green-900 cursor-pointer text-gray-900">
             Xem tất cả tin nhắn
@@ -29,8 +29,8 @@ const Chat = () => {
 
             <div>
               <p className="font-semibold">{item.message}</p>
-              <p className="text-gray-500 ">{item.desc}</p>
-              <p className="text-gray-500">{item.time}</p>
+              <p className="text-gray-500 text-sm">{item.desc}</p>
+              <p className="text-gray-500 text-sm">{item.time}</p>
             </div>
           </div>
         ))}

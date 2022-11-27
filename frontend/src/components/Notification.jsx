@@ -3,15 +3,15 @@ import React from "react";
 import { notifications } from "../data/messages";
 
 const unRead =
-  "flex items-center leading-8 gap-5 p-3 border-b border-gray-300 cursor-pointer hover:bg-green-100 bg-gray-100";
+  "flex items-center gap-5 px-8 py-3 border-b border-gray-300 cursor-pointer hover:bg-green-100 bg-gray-100";
 const read =
-  "flex items-center leading-8 gap-5 p-3 border-b border-gray-300 cursor-pointer hover:bg-green-100";
+  "flex items-center gap-5 px-8 py-3 border-b border-gray-300 cursor-pointer hover:bg-green-100";
 
 const Notification = () => {
   return (
-    <div className="absolute right-10 top-16 bg-white p-8 rounded-lg w-96 h-128 overflow-auto border border-gray-200">
+    <div className="absolute right-10 top-16 py-8 bg-white rounded-lg w-96 h-128 overflow-auto border border-gray-200">
       <div className="flex justify-between items-center">
-        <div className="w-full flex justify-between items-end">
+        <div className="w-full flex justify-between items-end px-8">
           <p className="font-bold text-lg">Thông báo</p>
           <p className="hover:underline hover:text-green-900 cursor-pointer text-gray-900">
             Xem tất cả thông báo
