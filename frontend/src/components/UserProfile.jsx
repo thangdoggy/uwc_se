@@ -15,7 +15,7 @@ const UserProfile = () => {
   };
 
   return (
-    <div className="nav-item absolute right-10 top-16 bg-white p-8 rounded-lg w-80 shadow-lg border border-gray-200">
+    <div className="nav-item absolute right-10 top-16 bg-white p-8 rounded-lg w-96 shadow-lg border border-gray-200">
       <p className="font-bold text-lg">Hồ sơ của bạn</p>
       <Link
         to="#"

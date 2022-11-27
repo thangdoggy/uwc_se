@@ -3,7 +3,7 @@ import React from "react";
 import { chats } from "../data/messages";
 
 const unRead =
-  "flex items-center gap-5 px-8 py-3 border-b border-gray-300 cursor-pointer hover:bg-green-100 bg-gray-100";
+  "flex items-center gap-5 px-8 py-3 border-b border-gray-300 cursor-pointer hover:bg-green-100 bg-gray-200 font-semibold";
 const read =
   "flex items-center gap-5 px-8 py-3 border-b border-gray-300 cursor-pointer hover:bg-green-100";
 
