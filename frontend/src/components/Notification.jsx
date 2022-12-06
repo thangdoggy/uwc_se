@@ -29,6 +29,7 @@ const Notification = () => {
             <div>
               <p className="font-semibold">{item.message}</p>
               <p className="text-gray-500 text-sm ">{item.desc}</p>
+              <p className="text-gray-500 text-sm float-right">{item.time}</p>
             </div>
           </div>
         ))}

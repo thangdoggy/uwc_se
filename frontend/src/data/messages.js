@@ -6,30 +6,36 @@ export const notifications = [
     image: bin,
     message: "Đã đầy rác",
     desc: "Điểm thu gom tại đường số 23 đã đầy rác",
+    time: "8:02 27/11/2022",
+
     isRead: false,
   },
   {
     image: bin,
     message: "Đã đầy rác",
     desc: "Điểm thu gom tại đường số 23 đã đầy rác",
+    time: "8:02 27/11/2022",
     isRead: true,
   },
   {
     image: bin,
     message: "Đã đầy rác",
     desc: "Điểm thu gom tại đường số 23 đã đầy rác",
+    time: "8:02 27/11/2022",
     isRead: false,
   },
   {
     image: bin,
     message: "Đã đầy rác",
     desc: "Điểm thu gom tại đường số 23 đã đầy rác",
+    time: "8:02 27/11/2022",
     isRead: true,
   },
   {
     image: bin,
     message: "Đã đầy rác",
     desc: "Điểm thu gom tại đường số 23 đã đầy rác",
+    time: "8:02 27/11/2022",
     isRead: true,
   },
 ];
