@@ -12,6 +12,8 @@ import {
   VehiclesTask,
   McpsTask,
   RoutesTask,
+  AddVehicle,
+  ChangeCollector,
 } from "./pages";
 
 import { Header, Sidebar } from "./components";
@@ -49,6 +51,12 @@ const App = () => {
 
             {/* Task management */}
             <Route path="/vehicles-task" element={<VehiclesTask />} />
+            <Route path="/vehicles-task/add/:month" element={<AddVehicle />} />
+            <Route
+              path="/vehicles-task/changeCollector/:id"
+              element={<ChangeCollector />}
+            />
+
             <Route path="/mcps-task" element={<McpsTask />} />
             <Route path="/routes-task" element={<RoutesTask />} />
           </Routes>

@@ -17,7 +17,7 @@ const Header = () => {
   const [clickedNotification, setClickedNotification] = useState(false);
 
   return (
-    <div className="fixed w-full flex justify-between shadow-md bg-gray-100 h-20 px-11 z-1000">
+    <div className="fixed w-full flex justify-between shadow-md bg-gray-100 h-20 px-11 z-50">
       <Link to="/" className="flex items-center">
         <img src={Logo} alt="" width="60px" />
         <h1 className="font-bold uppercase text-2xl text-green-900 pl-5">

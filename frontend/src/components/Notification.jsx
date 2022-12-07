@@ -9,7 +9,7 @@ const read =
 
 const Notification = () => {
   return (
-    <div className="absolute right-10 top-16 py-8 bg-white rounded-lg w-96 h-128 overflow-auto border border-gray-200">
+    <div className="absolute right-10 top-16 py-8 bg-white rounded-lg w-96 h-128 overflow-auto border border-gray-200 z-50">
       <div className="flex justify-between items-center">
         <div className="w-full flex justify-between items-end px-8">
           <p className="font-bold text-lg">Thông báo</p>
