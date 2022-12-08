@@ -1,0 +1,101 @@
+.mainBox_input {
+    display: flex;
+  }
+  .mainBox_input.formBox {
+    margin: 25px;
+    flex-wrap: wrap;
+    box-shadow: none;
+    flex-grow: 1;
+  }
+  /* * {
+    box-sizing: border-box;
+  } */
+  
+  .input_input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    resize: vertical;
+  }
+  
+  .label_input {
+    font-weight: bold;
+    padding: 12px 12px 12px 0;
+    display: inline-block;
+  }
+  
+  /* input[type=submit] {
+      background-color: #04AA6D;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      float: right;
+    } */
+  
+  /* input[type=submit]:hover {
+      background-color: #45a049;
+    } */
+  
+  .mainBox_input.formBox.formContainer {
+    border-radius: 5px;
+    /* background-color: #f2f2f2; */
+    /* padding: 20px; */
+    display: block;
+  }
+  
+  .col-25_input {
+    float: left;
+    width: 30%;
+    margin-top: 6px;
+  }
+  
+  .col-75_input {
+    float: left;
+    /* width: auto%; */
+    margin-top: 6px;
+  }
+  
+  .col-end_input {
+    float: left;
+    /* margin-top: 6px; */
+  }
+  
+  .row_input {
+    width: 100%;
+  }
+  /* Clear floats after the columns */
+  .row_input:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  
+  /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+  @media screen and (max-width: 1000px) {
+    .col-25_input,
+    .col-75_input,
+    /* input[type="submit"] {
+      width: 100%;
+      margin-top: 0;
+    } */
+    .mainBox_input {
+      flex-direction: column;
+    }
+  }
+  
+  .mainBox_input.choiceBox {
+    /* flex-direction: column; */
+    box-shadow: none;
+    /* flex-wrap: wrap; */
+    display: block;
+    margin: 25px;
+  }
+  
+  .radioButton_input {
+    margin:0;
+    padding:0;    
+    width:20px!important;  
+  }
