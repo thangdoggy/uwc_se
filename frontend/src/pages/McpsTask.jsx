@@ -9,6 +9,7 @@ import { BiExit } from "react-icons/bi";
 
 
 import { mcpsData } from "../data/mcps";
+import { Janitors } from "../data/janitors";
 import Popup from './Popup';
 import './Input.css'
 
@@ -39,6 +40,14 @@ const columns = [
     }    
   },
   {
+    name: "capacity",
+    label: "Dung lượng (tấn)",
+    options: {
+      filter: true,
+      sort: true,
+    }    
+  },  
+  {
     name: "janitors",
     label: "Janitors",
     options: {
@@ -51,15 +60,19 @@ const columns = [
 export default function McpsTask() {
   const [month, setMonth] = useState("12/2022"); 
   const [popup1, setPopup1] = useState(false);
+  const [popup2, setPopup2] = useState(false);
   const [infoToAdd, setInfoToAdd] = useState({
     "address": "",
     "capacity": 0,
     "janitors": []
   })
- 
-  const togglePopup = () => {
+  const [checkedList, setCheckedList] = useState(new Array(Janitors.size).fill(false))
+  const togglePopup1 = () => {
     setPopup1(!popup1);
   }  
+  const togglePopup2 = () => {
+    setPopup2(!popup2);
+  }
 
   // delete in the database
   const deleteMcps = (rowsDeleted) => {
@@ -100,22 +113,31 @@ export default function McpsTask() {
         </FormControl> 
         <button
           className="ml-auto flex items-center gap-2 h-11 px-5 border border-green-900 rounded-full font-semibold bg-white text-green-900 hover:bg-green-900 hover:text-white shadow-lg"
-          onClick={togglePopup}
+          onClick={togglePopup1}
         >
           <p className="text-sm">
             <FaPlus />
           </p>
-          <p>Thêm phương tiện</p>
+          <p>Thêm MCP</p>
         </button>            
       </div> 
 
     <div>  
   <div>
     {popup1 && <Popup // add mcps pop-up
-      content={<AddNew1 infoToAdd={infoToAdd} setInfoToAdd={setInfoToAdd} togglePopup={togglePopup}/>}
-      handleClose={togglePopup}
+      content={<AddNew1 infoToAdd={infoToAdd} setInfoToAdd={setInfoToAdd} 
+      togglePopup1={togglePopup1} togglePopup2={togglePopup2}/>}
+      handleClose={togglePopup1}
     />}
   </div>  
+  <div>
+    {popup2 && <Popup // add mcps pop-up
+      content={<AddNew2 infoToAdd={infoToAdd} setInfoToAdd={setInfoToAdd} 
+      togglePopup1={togglePopup1} togglePopup2={togglePopup2} checkedList={checkedList} 
+      setCheckedList={setCheckedList}/>}
+      handleClose={togglePopup2}
+    />}
+  </div>    
     </div>
 
       <div className="w-full">
@@ -140,11 +162,12 @@ export default function McpsTask() {
 }
 
 const AddNew1 = (props) => {
-  const {infoToAdd, setInfoToAdd, togglePopup} = props
+  const {infoToAdd, setInfoToAdd, togglePopup1, togglePopup2} = props
   const handleFormChange = (event) => {
     const attr = event.target.name;
     const value = event.target.value;
     setInfoToAdd((values) => ({ ...values, [attr]: value }));
+    console.log(infoToAdd)
   };  
   return(
   <div>
@@ -166,6 +189,10 @@ const AddNew1 = (props) => {
       <button
         className="flex items-center gap-2 h-11 px-5 border border-green-900 rounded-full font-semibold bg-white text-green-900 hover:bg-green-900 hover:text-white shadow-lg"
         style={{margin:'20px'}}
+        onClick={() => {
+          togglePopup1()
+          togglePopup2()
+        }}
       >
           <p className="text-sm">
             <BiCheckCircle />
@@ -175,7 +202,90 @@ const AddNew1 = (props) => {
       <button
         className="flex items-center gap-2 h-11 px-5 border border-green-900 rounded-full font-semibold bg-white text-green-900 hover:bg-green-900 hover:text-white shadow-lg"
         style={{margin:'20px'}}
-        onClick={togglePopup}
+        onClick={togglePopup1}
+      >
+        <p className="text-sm">
+          <BiExit />
+        </p>
+        QUAY LẠI
+      </button>
+    </div>    
+  </div>
+  )
+}
+
+const AddNew2 = (props) => {
+  const {infoToAdd, setInfoToAdd, togglePopup1, togglePopup2, checkedList, setCheckedList} = props
+  // const [checkedList, setCheckedList] = useState(new Array(Janitors.size).fill(false))
+  
+  const handleCheck = (event) => {
+    let id = event.target.value
+    let position = event.target.name
+    const updatedCheckedState = checkedList.map((item, index) =>
+      index == position ? !item : item
+    );
+
+    let newJanitors = [...infoToAdd.janitors]
+    if (event.target.checked) {
+      newJanitors = [...newJanitors, id]
+    } else {
+      newJanitors.splice(newJanitors.indexOf(id), 1)
+    }
+
+    setCheckedList(updatedCheckedState)
+    setInfoToAdd({...infoToAdd, janitors: newJanitors})
+  }
+
+  return (
+  <div>
+    <form>
+      {
+        Array.from(Janitors.keys()).map((id, index) => 
+          <label>
+          <input
+            className="radioButton_input"
+            type="checkbox"
+            value={id}
+            name={index}
+            checked={checkedList[index]}
+            onChange={handleCheck}
+          />
+          {Janitors.get(id).name}
+          <br/>
+          </label>
+        )
+      }
+    </form>
+    <div style={{display: 'flex', justifyContent:'center'}}>
+      <button
+        className="flex items-center gap-2 h-11 px-5 border border-green-900 rounded-full font-semibold bg-white text-green-900 hover:bg-green-900 hover:text-white shadow-lg"
+        style={{margin:'20px'}}
+        onClick={() => {
+          const newMcpData = {
+            id: mcpsData.length,
+            address: infoToAdd.address,
+            currentVolume: 0,
+            capacity: infoToAdd.capacity,
+            janitors: infoToAdd.janitors.sort()
+          }
+          // console.log(mcpsData )
+          // mcpsData = [...mcpsData, newMcpData]
+          mcpsData.push(newMcpData)
+          togglePopup2();
+        }}
+      >
+          <p className="text-sm">
+            <BiCheckCircle />
+          </p>
+        HOÀN THÀNH
+      </button>
+      <button
+        className="flex items-center gap-2 h-11 px-5 border border-green-900 rounded-full font-semibold bg-white text-green-900 hover:bg-green-900 hover:text-white shadow-lg"
+        style={{margin:'20px'}}
+        onClick={() => {
+          togglePopup2()
+          togglePopup1()
+        }}
       >
         <p className="text-sm">
           <BiExit />
