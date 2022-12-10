@@ -63,7 +63,6 @@ export default function McpsTask() {
     "capacity": 0,
     "janitors": []
   })
-  const [checkedList, setCheckedList] = useState(new Array(Janitors.size).fill(false))
   const togglePopup1 = () => {
     setPopup1(!popup1);
   }  
@@ -84,7 +83,7 @@ export default function McpsTask() {
     rowsDeleted.sort((x,y) => y.index - x.index) // sort descending order
     for (let i = 0; i < rowsDeleted.length; ++i) {
       const idToDelete = mcpsDataKeys[rowsDeleted[i].index]
-      console.log(mcpsData.delete(idToDelete))
+      mcpsData.delete(idToDelete)
     }
   }
 
@@ -138,8 +137,7 @@ export default function McpsTask() {
   <div>
     {popup2 && <Popup // add mcps pop-up
       content={<AddNew2 infoToAdd={infoToAdd} setInfoToAdd={setInfoToAdd} 
-      togglePopup1={togglePopup1} togglePopup2={togglePopup2} checkedList={checkedList} 
-      setCheckedList={setCheckedList}/>}
+      togglePopup1={togglePopup1} togglePopup2={togglePopup2}/>}
       handleClose={togglePopup2}
     />}
   </div>    
@@ -170,7 +168,6 @@ export default function McpsTask() {
           options={{
             filterType: "multiselect",
             fixedHeader: true,
-            responsive: "scroll",
             tableBodyHeight: "45vh",
             expandableRowsHeader: false,
             onRowClick: (rowData) => {
@@ -222,12 +219,11 @@ const AddNew1 = (props) => {
 }
 
 const AddNew2 = (props) => {
-  const {infoToAdd, setInfoToAdd, togglePopup1, togglePopup2, checkedList, setCheckedList} = props
+  const {infoToAdd, setInfoToAdd, togglePopup1, togglePopup2} = props
 
   return (
   <div>
-    <JanitorsCheckForm userInfo={infoToAdd} setUserInfo={setInfoToAdd}
-      checkedList={checkedList} setCheckedList={setCheckedList}/>
+    <JanitorsCheckForm userInfo={infoToAdd} setUserInfo={setInfoToAdd}/>
     <div style={{display: 'flex', justifyContent:'center'}}>
       <button
         className="flex items-center gap-2 h-11 px-5 border border-green-900 rounded-full font-semibold bg-white text-green-900 hover:bg-green-900 hover:text-white shadow-lg"
@@ -240,13 +236,14 @@ const AddNew2 = (props) => {
           } else if (infoToAdd.capacity < 0) {
             alert("Capacity should be greater than 0")
           } else {          
-            const newMcpData = {
+            const mcpsKeys = Array.from(mcpsData.keys())
+            const currentLargestID = mcpsKeys[mcpsKeys.length - 1]
+            mcpsData.set(currentLargestID + 1, {
               address: infoToAdd.address,
-              currentVolume: 0,
+              currentVolume: infoToAdd.currentVolume,
               capacity: infoToAdd.capacity,
               janitors: infoToAdd.janitors.sort()
-            }
-            mcpsData.set(mcpsData.size + 1, newMcpData)
+            })
             // reset 'info to add' to the default
             setInfoToAdd({
               "address": "",
@@ -254,7 +251,6 @@ const AddNew2 = (props) => {
               "capacity": 0,
               "janitors": []
             })
-            setCheckedList(new Array(Janitors.size).fill(false))
             togglePopup2();
           }
         }}
@@ -308,7 +304,7 @@ const ViewMCP = (props) => {
     <div className="JanitorsViewBox">
       {
         mcp.janitors.map((id) => 
-          <p>{id} - {Janitors.get(id).name}</p>
+          <p key={id}>{id} - {Janitors.get(id).name}</p>
         )
       }
 
@@ -317,25 +313,14 @@ const ViewMCP = (props) => {
   )
 }
 
-const getCurrentCheckedList = (janitors) => {
-  const res = new Array(Janitors.size).fill(false)
-  for (let i = 0; i < janitors.length; ++i) {
-    res[janitors[i] - 1] = true
-  }
-
-  return res
-}
-
 const EditMCP = (props) => {
   const {mcpID, toggleViewPopup, toggleEditPopup} = props
   const [userInfo, setUserInfo] = useState(mcpsData.get(mcpID))
-  const [checkedList, setCheckedList] = useState(getCurrentCheckedList(userInfo.janitors))
 
   return (
   <>
   <McpInfoForm userInfo={userInfo} setUserInfo={setUserInfo}/>
-  <JanitorsCheckForm userInfo={userInfo} setUserInfo={setUserInfo} 
-          checkedList={checkedList} setCheckedList={setCheckedList}/>
+  <JanitorsCheckForm userInfo={userInfo} setUserInfo={setUserInfo}/>
   <div style={{display: 'flex', justifyContent:'center'}}>
     <button
       className="flex items-center gap-2 h-11 px-5 border border-green-900 rounded-full font-semibold bg-white text-green-900 hover:bg-green-900 hover:text-white shadow-lg"
@@ -443,23 +428,18 @@ const McpInfoForm = (props) => {
 }
 
 const JanitorsCheckForm = (props) => {
-  const {userInfo, setUserInfo, checkedList, setCheckedList} = props
+  const {userInfo, setUserInfo} = props
 
   const handleCheck = (event) => {
-    let id = event.target.value
-    let position = event.target.name
-    const updatedCheckedState = checkedList.map((item, index) =>
-      index == position ? !item : item
-    );
+    let id = parseInt(event.target.value)
 
     let newJanitors = [...userInfo.janitors]
     if (event.target.checked) {
-      newJanitors = [...newJanitors, parseInt(id)]
+      newJanitors = [...newJanitors, id]
     } else {
-      newJanitors.splice(newJanitors.indexOf(parseInt(id)), 1)
+      newJanitors.splice(newJanitors.indexOf(id), 1)
     }
 
-    setCheckedList(updatedCheckedState)
     setUserInfo({...userInfo, janitors: newJanitors})
   }  
 
@@ -467,14 +447,13 @@ const JanitorsCheckForm = (props) => {
   <div className="JanitorsViewBox">
     <form>
       {
-        Array.from(Janitors.keys()).map((id, index) => 
-          <label>
+        Array.from(Janitors.keys()).map((id) => 
+          <label key={id}>
           <input
             className="radioButton_input"
             type="checkbox"
             value={id}
-            name={index}
-            checked={checkedList[index]}
+            checked={userInfo.janitors.includes(id)}
             onChange={handleCheck}
           />
           {id + ' - ' + Janitors.get(id).name}
