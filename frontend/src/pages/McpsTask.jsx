@@ -59,7 +59,8 @@ export default function McpsTask() {
   const [popup2, setPopup2] = useState(false); // add new 2 popup state
   const [infoToAdd, setInfoToAdd] = useState({
     "address": "",
-    "capacity": "",
+    "currentVolume": 0,
+    "capacity": 0,
     "janitors": []
   })
   const [checkedList, setCheckedList] = useState(new Array(Janitors.size).fill(false))
@@ -176,9 +177,6 @@ export default function McpsTask() {
               setClickedRow(parseInt(rowData[0]))
               toggleViewPopup()
             },
-            // onRowSelectionChange: (rowData) => {
-            //   console.log(rowData)
-            // },
             onRowsDelete: (rows) => {deleteMcps(rows)},
           }}
           className="mr-11"
@@ -190,29 +188,10 @@ export default function McpsTask() {
 
 const AddNew1 = (props) => {
   const {infoToAdd, setInfoToAdd, togglePopup1, togglePopup2} = props
-  const handleFormChange = (event) => {
-    const attr = event.target.name;
-    const value = event.target.value;
-    setInfoToAdd((values) => ({ ...values, [attr]: value }));
-  };  
+
   return(
   <div>
-    <form>
-      <EditableInput
-        labelText="Địa chỉ"
-        placeholder="Nhập địa chỉ của MCP"
-        name="address"
-        value={infoToAdd.address}
-        onChange={handleFormChange}
-      />
-      <EditableInput
-        labelText="Sức chứa"
-        placeholder="Nhập sức chứa của MCP (tấn)"
-        name="capacity"
-        value={infoToAdd.capacity}
-        onChange={handleFormChange}
-      />
-    </form>
+    <McpInfoForm userInfo={infoToAdd} setUserInfo={setInfoToAdd}/>
     <div style={{display: 'flex', justifyContent:'center'}}>
       <button
         className="flex items-center gap-2 h-11 px-5 border border-green-900 rounded-full font-semibold bg-white text-green-900 hover:bg-green-900 hover:text-white shadow-lg"
@@ -290,20 +269,29 @@ const AddNew2 = (props) => {
         className="flex items-center gap-2 h-11 px-5 border border-green-900 rounded-full font-semibold bg-white text-green-900 hover:bg-green-900 hover:text-white shadow-lg"
         style={{margin:'20px'}}
         onClick={() => {
-          const newMcpData = {
-            address: infoToAdd.address,
-            currentVolume: 0,
-            capacity: infoToAdd.capacity,
-            janitors: infoToAdd.janitors.sort()
+          if (infoToAdd.address === "") {
+            alert("Address cannot be left empty")
+          } else if (infoToAdd.currentVolume < 0 || infoToAdd.currentVolume > 100) {
+            alert("Current volume has to be in range of 0 to 100")
+          } else if (infoToAdd.capacity < 0) {
+            alert("Capacity should be greater than 0")
+          } else {          
+            const newMcpData = {
+              address: infoToAdd.address,
+              currentVolume: 0,
+              capacity: infoToAdd.capacity,
+              janitors: infoToAdd.janitors.sort()
+            }
+            mcpsData.set(mcpsData.size + 1, newMcpData)
+            // reset 'info to add' to the default
+            setInfoToAdd({
+              "address": "",
+              "currentVolume":0,
+              "capacity": 0,
+              "janitors": []
+            })
+            togglePopup2();
           }
-          mcpsData.set(mcpsData.size + 1, newMcpData)
-          // reset 'info to add' to the default
-          setInfoToAdd({
-            "address": "",
-            "capacity": 0,
-            "janitors": []
-          })
-          togglePopup2();
         }}
       >
           <p className="text-sm">
@@ -377,11 +365,6 @@ const EditMCP = (props) => {
   const {mcpID, toggleViewPopup, toggleEditPopup} = props
   const [userInfo, setUserInfo] = useState(mcpsData.get(mcpID))
   const [checkedList, setCheckedList] = useState(getCurrentCheckedList(userInfo.janitors))
-  const handleFormChange = (event) => {
-    const attr = event.target.name;
-    const value = event.target.value;
-    setUserInfo((values) => ({ ...values, [attr]: value }));
-  }; 
   const handleCheck = (event) => {
     let id = event.target.value
     let position = event.target.name
@@ -402,29 +385,7 @@ const EditMCP = (props) => {
 
   return (
   <>
-  <form>
-    <EditableInput
-      labelText="Địa chỉ"
-      placeholder="Nhập địa chỉ của MCP"
-      name="address"
-      value={userInfo.address}
-      onChange={handleFormChange}
-    />
-    <EditableInput
-      labelText="Dung lượng hiện tại"
-      placeholder="Nhập dung lượng hiện tại của MCP (%)"
-      name="currentVolume"
-      value={userInfo.currentVolume}
-      onChange={handleFormChange}
-    />    
-    <EditableInput
-      labelText="Sức chứa"
-      placeholder="Nhập sức chứa của MCP (tấn)"
-      name="capacity"
-      value={userInfo.capacity}
-      onChange={handleFormChange}
-    />
-  </form>    
+  <McpInfoForm userInfo={userInfo} setUserInfo={setUserInfo}/>
   <div className="JanitorsViewBox">
     <form>
       {
@@ -450,13 +411,21 @@ const EditMCP = (props) => {
       className="flex items-center gap-2 h-11 px-5 border border-green-900 rounded-full font-semibold bg-white text-green-900 hover:bg-green-900 hover:text-white shadow-lg"
       style={{margin:'20px'}}
       onClick={() => {
-        mcpsData.set(mcpID, {
-          address: userInfo.address,
-          currentVolume: userInfo.currentVolume,
-          capacity: userInfo.capacity,
-          janitors: userInfo.janitors.sort()
-        })
-        toggleEditPopup();
+        if (userInfo.address === "") {
+          alert("Address cannot be left empty")
+        } else if (userInfo.currentVolume < 0 || userInfo.currentVolume > 100) {
+          alert("Current volume has to be in range of 0 to 100")
+        } else if (userInfo.capacity < 0) {
+          alert("Capacity should be greater than 0")
+        } else {
+          mcpsData.set(mcpID, {
+            address: userInfo.address,
+            currentVolume: userInfo.currentVolume,
+            capacity: userInfo.capacity,
+            janitors: userInfo.janitors.sort()
+          })
+          toggleEditPopup();
+        }
       }}
     >
         <p className="text-sm">
@@ -482,24 +451,63 @@ const EditMCP = (props) => {
   )
 }
 
-function EditableInput(props) {
-  const { labelText, placeholder, name, value, onChange } = props;
-
+const McpInfoForm = (props) => {
+  const {userInfo, setUserInfo} = props
+  const handleFormChange = (event) => {
+    const attr = event.target.name;
+    const value = event.target.value;
+    setUserInfo((values) => ({ ...values, [attr]: value }));
+  };   
   return (
+  <form>
     <div className="row_input">
       <div className="col-25_input">
-        <label className="label_input">{labelText}</label>
+        <label className="label_input">Địa chỉ</label>
       </div>
       <div className="col-75_input">
         <input
           className="input_input"
           type="text"
-          placeholder={placeholder}
-          name={name}
-          value={value}
-          onChange={onChange}
+          placeholder="Nhập địa chỉ của MCP"
+          name="address"
+          value={userInfo.address}
+          onChange={handleFormChange}
         />
       </div>
-    </div>
-  );
+    </div>    
+    <div className="row_input">
+      <div className="col-25_input">
+        <label className="label_input">Dung lượng hiện tại</label>
+      </div>
+      <div className="col-75_input">
+        <input
+          className="input_input"
+          type="number"
+          min="0"
+          max="100"
+          placeholder="Nhập dung lượng hiện tại của MCP (%)"
+          name="currentVolume"
+          value={userInfo.currentVolume}
+          onChange={handleFormChange}
+        />
+      </div>
+    </div>   
+    <div className="row_input">
+      <div className="col-25_input">
+        <label className="label_input">Sức chứa</label>
+      </div>
+      <div className="col-75_input">
+        <input
+          className="input_input"
+          type="number"
+          min="0"
+          placeholder="Nhập sức chứa của MCP (tấn)"
+          name="capacity"
+          value={userInfo.capacity}
+          onChange={handleFormChange}
+        />
+      </div>
+    </div>            
+  </form>  
+  )
 }
