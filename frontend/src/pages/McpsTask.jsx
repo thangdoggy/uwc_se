@@ -223,47 +223,11 @@ const AddNew1 = (props) => {
 
 const AddNew2 = (props) => {
   const {infoToAdd, setInfoToAdd, togglePopup1, togglePopup2, checkedList, setCheckedList} = props
-  
-  const handleCheck = (event) => {
-    let id = event.target.value
-    let position = event.target.name
-    const updatedCheckedState = checkedList.map((item, index) =>
-      index == position ? !item : item
-    );
-
-    let newJanitors = [...infoToAdd.janitors]
-    if (event.target.checked) {
-      newJanitors = [...newJanitors, parseInt(id)]
-    } else {
-      newJanitors.splice(newJanitors.indexOf(parseInt(id)), 1)
-    }
-
-    setCheckedList(updatedCheckedState)
-    setInfoToAdd({...infoToAdd, janitors: newJanitors})
-  }
 
   return (
   <div>
-    <div className="JanitorsViewBox">
-    <form>
-      {
-        Array.from(Janitors.keys()).map((id, index) => 
-          <label>
-          <input
-            className="radioButton_input"
-            type="checkbox"
-            value={id}
-            name={index}
-            checked={checkedList[index]}
-            onChange={handleCheck}
-          />
-          {id + ' - ' + Janitors.get(id).name}
-          <br/>
-          </label>
-        )
-      }
-    </form>
-    </div>
+    <JanitorsCheckForm userInfo={infoToAdd} setUserInfo={setInfoToAdd}
+      checkedList={checkedList} setCheckedList={setCheckedList}/>
     <div style={{display: 'flex', justifyContent:'center'}}>
       <button
         className="flex items-center gap-2 h-11 px-5 border border-green-900 rounded-full font-semibold bg-white text-green-900 hover:bg-green-900 hover:text-white shadow-lg"
@@ -290,6 +254,7 @@ const AddNew2 = (props) => {
               "capacity": 0,
               "janitors": []
             })
+            setCheckedList(new Array(Janitors.size).fill(false))
             togglePopup2();
           }
         }}
@@ -365,47 +330,12 @@ const EditMCP = (props) => {
   const {mcpID, toggleViewPopup, toggleEditPopup} = props
   const [userInfo, setUserInfo] = useState(mcpsData.get(mcpID))
   const [checkedList, setCheckedList] = useState(getCurrentCheckedList(userInfo.janitors))
-  const handleCheck = (event) => {
-    let id = event.target.value
-    let position = event.target.name
-    const updatedCheckedState = checkedList.map((item, index) =>
-      index == position ? !item : item
-    );
-
-    let newJanitors = [...userInfo.janitors]
-    if (event.target.checked) {
-      newJanitors = [...newJanitors, parseInt(id)]
-    } else {
-      newJanitors.splice(newJanitors.indexOf(parseInt(id)), 1)
-    }
-
-    setCheckedList(updatedCheckedState)
-    setUserInfo({...userInfo, janitors: newJanitors})
-  }
 
   return (
   <>
   <McpInfoForm userInfo={userInfo} setUserInfo={setUserInfo}/>
-  <div className="JanitorsViewBox">
-    <form>
-      {
-        Array.from(Janitors.keys()).map((id, index) => 
-          <label>
-          <input
-            className="radioButton_input"
-            type="checkbox"
-            value={id}
-            name={index}
-            checked={checkedList[index]}
-            onChange={handleCheck}
-          />
-          {id + ' - ' + Janitors.get(id).name}
-          <br/>
-          </label>
-        )
-      }
-    </form>  
-  </div>
+  <JanitorsCheckForm userInfo={userInfo} setUserInfo={setUserInfo} 
+          checkedList={checkedList} setCheckedList={setCheckedList}/>
   <div style={{display: 'flex', justifyContent:'center'}}>
     <button
       className="flex items-center gap-2 h-11 px-5 border border-green-900 rounded-full font-semibold bg-white text-green-900 hover:bg-green-900 hover:text-white shadow-lg"
@@ -509,5 +439,50 @@ const McpInfoForm = (props) => {
       </div>
     </div>            
   </form>  
+  )
+}
+
+const JanitorsCheckForm = (props) => {
+  const {userInfo, setUserInfo, checkedList, setCheckedList} = props
+
+  const handleCheck = (event) => {
+    let id = event.target.value
+    let position = event.target.name
+    const updatedCheckedState = checkedList.map((item, index) =>
+      index == position ? !item : item
+    );
+
+    let newJanitors = [...userInfo.janitors]
+    if (event.target.checked) {
+      newJanitors = [...newJanitors, parseInt(id)]
+    } else {
+      newJanitors.splice(newJanitors.indexOf(parseInt(id)), 1)
+    }
+
+    setCheckedList(updatedCheckedState)
+    setUserInfo({...userInfo, janitors: newJanitors})
+  }  
+
+  return (
+  <div className="JanitorsViewBox">
+    <form>
+      {
+        Array.from(Janitors.keys()).map((id, index) => 
+          <label>
+          <input
+            className="radioButton_input"
+            type="checkbox"
+            value={id}
+            name={index}
+            checked={checkedList[index]}
+            onChange={handleCheck}
+          />
+          {id + ' - ' + Janitors.get(id).name}
+          <br/>
+          </label>
+        )
+      }
+    </form>  
+  </div>  
   )
 }
