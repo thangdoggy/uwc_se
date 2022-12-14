@@ -15,8 +15,9 @@ import {
   AddVehicle,
   ChangeCollector,
 } from "./pages";
-
 import { Header, Sidebar } from "./components";
+import AddRoute from "./pages/AddRoute";
+import ChangeVehicle from "./pages/ChangeVehicle";
 
 const App = () => {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -58,7 +59,13 @@ const App = () => {
             />
 
             <Route path="/mcps-task" element={<McpsTask />} />
+
             <Route path="/routes-task" element={<RoutesTask />} />
+            <Route path="/routes-task/add/:month" element={<AddRoute />} />
+            <Route
+              path="/routes-task/changeVehicle/:id"
+              element={<ChangeVehicle />}
+            />
           </Routes>
         </div>
       </BrowserRouter>
