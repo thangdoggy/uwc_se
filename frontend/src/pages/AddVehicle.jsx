@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import {
   FormControl,
@@ -11,7 +11,7 @@ import {
 
 import { VehicleItem, CollectorItem } from "../components";
 
-import { AllVehicles, vehiclesDecember } from "../data/vehicles";
+import { AllVehicles, unUseVehicle, vehiclesDecember } from "../data/vehicles";
 import { Collectors } from "../data/collector";
 
 const AddVehicle = () => {
@@ -34,6 +34,7 @@ const AddVehicle = () => {
     };
 
     vehiclesDecember.push(a);
+    unUseVehicle.push(a);
 
     // const temp = JSON.parse(localStorage.getItem("vehiclesDecember"));
     // temp.push(a);

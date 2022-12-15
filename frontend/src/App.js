@@ -61,7 +61,7 @@ const App = () => {
             <Route path="/mcps-task" element={<McpsTask />} />
 
             <Route path="/routes-task" element={<RoutesTask />} />
-            <Route path="/routes-task/add/:month" element={<AddRoute />} />
+            <Route path="/routes-task/add" element={<AddRoute />} />
             <Route
               path="/routes-task/changeVehicle/:id"
               element={<ChangeVehicle />}

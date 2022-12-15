@@ -27,17 +27,6 @@ const columns = [
     },
   },
   {
-    name: "status",
-    label: "Trạng thái",
-    options: {
-      customBodyRender: (value) => {
-        if (value === "Đang hoạt động")
-          return <p className="text-center text-green-600">Đang hoạt động</p>;
-        return <p className="text-center text-red-600">Không hoạt động</p>;
-      },
-    },
-  },
-  {
     name: "date",
     label: "Ngày hoạt động",
   },
@@ -62,7 +51,7 @@ const RoutesTask = () => {
   const title = (
     <div className="flex items-center gap-5 mb-2 mr-11 pt-4">
       <h1 className="font-bold text-2xl mb-5">Các tuyến đường hiện có </h1>
-      <FormControl
+      {/* <FormControl
         variant="standard"
         sx={{ m: 1, minWidth: 120 }}
         color="success"
@@ -85,11 +74,11 @@ const RoutesTask = () => {
           <MenuItem value="7-2022">7-2022</MenuItem>
           <MenuItem value="6-2022">6-2022</MenuItem>
         </Select>
-      </FormControl>
+      </FormControl> */}
       <button
         className="ml-auto flex items-center gap-2 h-11 px-5 border border-green-900 rounded-full font-semibold bg-white text-green-900 hover:bg-green-900 hover:text-white shadow-lg"
         onClick={() => {
-          navigate(`/routes-task/add/${month}`);
+          navigate(`/routes-task/add`);
         }}
       >
         <p className="text-sm">
